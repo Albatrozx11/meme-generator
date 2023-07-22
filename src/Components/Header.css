@@ -1,0 +1,21 @@
+.navbar {
+  height: 100px;
+  background: linear-gradient(90deg, #672280 1.18%, #a626d3 100%);
+  width: 100vi;
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.trollface {
+  height: 50px;
+  width: 58px;
+  margin: 28px 15px 28px 40px;
+}
+
+.title {
+  font-family: "Karla", sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-top: 30px;
+}
+
