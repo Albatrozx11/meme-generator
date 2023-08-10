@@ -22,10 +22,11 @@ h1 {
   line-height: 1.1;
 }
 
-h3 {
+h3,
+h2 {
   margin: 0;
 }
 
-h4{
-  margin:0;
+h4 {
+  margin: 0;
 }
