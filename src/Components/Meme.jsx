@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./Meme.css";
+import domtoimage from "dom-to-image";
 export default function Meme() {
   const [meme, setMeme] = useState({
     topText: "",
@@ -11,11 +12,11 @@ export default function Meme() {
   useEffect(() => {
     async function getMemes() {
       const res = await fetch("https://api.imgflip.com/get_memes");
-      const data = await res.json()
-      setAllMemes(data.data.memes)
+      const data = await res.json();
+      setAllMemes(data.data.memes);
     }
-    getMemes()
-  },[]);
+    getMemes();
+  }, []);
   function getMemeImage() {
     const randomNumber = Math.floor(Math.random() * allMemes.length);
     const url = allMemes[randomNumber].url;
@@ -25,6 +26,28 @@ export default function Meme() {
     }));
   }
 
+  async function handleDownload() {
+    const memeContainer = document.querySelector(".meme");
+
+    await new Promise((resolve) => {
+      const image = new Image();
+      image.src = meme.randomMeme;
+      image.onload = resolve;
+    });
+
+    domtoimage
+      .toPng(memeContainer)
+      .then((dataUrl) => {
+        // Create a temporary anchor element to trigger the download
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${meme.topText}.png`;
+        link.click();
+      })
+      .catch((error) => {
+        console.error("Error capturing meme:", error);
+      });
+  }
   function handleChange(event) {
     const { name, value } = event.target;
     setMeme((prevMeme) => ({
@@ -60,6 +83,9 @@ export default function Meme() {
         <h2 className="form--text top">{meme.topText}</h2>
         <h2 className="form--text bottom">{meme.bottomText}</h2>
       </div>
+      <button className="download--btn" onClick={handleDownload}>
+        Download Meme 📥
+      </button>
     </main>
   );
 }
